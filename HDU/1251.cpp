@@ -1,4 +1,4 @@
-    #include<iostream>
+  #include<iostream>
     #include<cstdio>
     #include<string>
     #include<cstring>
@@ -51,4 +51,4 @@
       root=new node();
       while(gets(str),*str)tireInsert(str);
       while(gets(str))cout<<tireFind(str)<<endl;
-    }
+}

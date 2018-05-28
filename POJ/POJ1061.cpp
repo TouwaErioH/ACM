@@ -15,7 +15,7 @@ int main()
     {
         d = extgcd(n - m, L, X, Y); r = L / d;
         if ((x - y) % d) cout << "Impossible" << endl;
-        else cout << ((x - y) / d * X % r + r) % r << endl;
+        else cout << ((x - y) / d * X % r + r) % r << endl;//a*(c/d)*x+b*(c/d)*y=d*c/d(是一种求特解的方法）
     }
     return 0;
 }

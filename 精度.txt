@@ -7,3 +7,5 @@
 3.要由整数a，b相除得浮点数，需要先a或b*1.0（此时默认转化为double型）
 
 4.double float不要相互赋值
+
+5.https://blog.csdn.net/xlzhang223/article/details/53202583  (输出见上方四条)

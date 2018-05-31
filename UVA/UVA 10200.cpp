@@ -25,7 +25,7 @@ void init()
     for(int i = 1; i <= 10000; i++){
         sum[i] = sum[i - 1];
         if(isprime(i * i + i + 41)) sum[i]++;
-    } 
+    }
 }
 
 int main()
@@ -37,7 +37,7 @@ int main()
         if(a == 0) cnt = sum[b];
         else cnt = sum[b] - sum[a - 1];
         double ans = 1.0 * cnt / (b - a + 1);//float 也可
-        printf("%.2lf\n", ans * 100 + 1e-5);
+        printf("%.2lf\n", ans * 100 + 1e-5);//1e-8ok，或者避开浮点运算
     }
     return 0;
 }

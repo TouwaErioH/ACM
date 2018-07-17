@@ -13,7 +13,7 @@ int bsearch(int x)
         {
             int ans=1;
             int g=i;
-        while((sum[g+1]==x)&&i!=n-1)//这个&&也很重要
+        while((sum[g+1]==x)&&g!=(n*n-1))//这个&&也很重要
             {
             g++;
             ans++;}

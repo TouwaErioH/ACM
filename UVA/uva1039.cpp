@@ -6,14 +6,17 @@ using namespace std;
 #define inf 999999
 #define eps 1e-6
 int mp[M][M],n,m;
-struct Point{
-double x,y;}city[M],bts[N];
+
+struct point
+{
+double x,y;
+}city[M],bts[N];
 
 void floyd()
 {
-        for(int k=0; k<=m; k++)
-            for(int i=0; i<=m; i++)
-                for(int j=0; j<=m; j++)
+        for(int k=1; k<=m; k++)
+            for(int i=1; i<=m; i++)
+                for(int j=1; j<=m; j++)
                     mp[i][j]=min(mp[i][j],mp[i][k]+mp[k][j]);
 }
 
@@ -40,7 +43,7 @@ int get_switch(double x1,double y1,double x2,double y2)
 {
     if(area(x1,y1)==area(x2,y2)) return 0;
     if(fabs(dis(x1,y1,x2,y2))<eps) return 1;
-    return get_switch(x1,x2,(x1+x2)/2,(y1+y2)/2)+get_switch((x1+x2)/2,(y1+y2)/2,x2,y2);
+    return get_switch(x1,y1,(x1+x2)/2,(y1+y2)/2)+get_switch((x1+x2)/2,(y1+y2)/2,x2,y2);
 }
 
 int main()
@@ -69,7 +72,7 @@ int main()
               if(mp[u][v]==inf)
                 printf("Impossible\n");
                 else
-                printf("&d\n",mp[u][v]);
+                printf("%d\n",mp[u][v]);
          }
     }
     return 0;

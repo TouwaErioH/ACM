@@ -1,9 +1,9 @@
 #include <iostream>
+#include <cstdio>
 #include <algorithm>
 #include <set>
 using namespace std;//思路，每个船a+1(最后不一定)，x的区间，最多x+1/(a+1)个船
 set<int> s;
-
 int main()
 {
     int m, n, a, k, x;
@@ -24,8 +24,6 @@ int main()
                 ans = i;
                 f = 1;
             }
-            if(f)
-                break;
             s.insert(x);
         }
         printf("%d\n", ans);

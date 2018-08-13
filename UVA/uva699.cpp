@@ -2,7 +2,7 @@
 #include<iostream>
 using namespace std;
 
-const int maxn = 200;
+const int maxn = 210;
 int sum[maxn];
 
 void build(int p) {
@@ -24,6 +24,7 @@ bool init() {
   sum[pos] = v;
   build(pos - 1);
   build(pos + 1);
+  return true;
 }
 
 int main() {

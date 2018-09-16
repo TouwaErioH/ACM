@@ -1,0 +1,31 @@
+be coincident with  与。。一致
+sequence顺序，数列
+subsequences子序列
+substring字串
+ratio比例，系数
+consecutive连续的
+discard丢弃
+distinct有区别，确切的
+inascending order.升序
+registration注册，挂号
+Geometric Progression 几何级数
+bfs宽度优先算法
+dp动态规划
+corresponding对应的，一致的
+pending 等待
+brief 下达命令
+odd  奇数
+spaciousness 空间
+obtain 得到
+alternating 交互的
+vertice vertex 顶点
+split 分开
+product  乘积
+factor  因子
+gcd 最大公约数
+lcm 最小公倍数
+ denominator 分母
+vice versa反之亦然
+can shift vertically and horizentally 可以竖直或水平移动
+multiples k  是k的倍数
+frequen 频率

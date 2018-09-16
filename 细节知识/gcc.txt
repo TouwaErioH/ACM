@@ -1,0 +1,110 @@
+一、什么是 GCC
+
+GCC 是 GNU 编译器套装的简称（GNU Compiler Collection），一套编程语言编译器，以 GPL 及 LGPL 许可证所发行的自由软件，也是 GNU 项目的关键部分，也是 GNU 工具链的主要组成部分之一。GCC（特别是其中的 C 语言编译器）也常被认为是跨平台编译器的事实标准。
+二、MinGW 和Cygwin
+
+由于 GCC 适用于 Linux/UNIX 系统，Windows 系统本身不支持 GCC，所以就有了 MinGW 和 Cygwin 的诞生，它们两都是把 GNU 从 Linux/UNIX 到 Windows 的移植应用。
+
+    MinGW 
+
+    MinGW, a contraction of "Minimalist GNU for Windows", is a minimalist development environment for native Microsoft Windows applications.
+
+这是 MinGW 的官方解释，MinGW 是 “Minimalist GNU for Windows” 的缩写，是非常简洁 Microsoft Windows 应用开发环境。
+
+
+命令行用cd 指令找到文件所在的文件夹。然后运行指令 g++ 文件名（包括后缀，中间有个空格）。回车，此时，如果没报错，说明成功了。现在你看看文件所在的目录，是不是生成了一个 a.exe的文件。只需要在命令行输入a.exe即可执行此文件。
+
+（一）gcc 编译C++程序是提示错误undefined reference to `std::ios_base::Init::Init() 的解决方法
+
+在linux下编译c++ 程序要使用g++ 编译器,如果你要是使用gcc编译器就会有上面的报错信息,只要在在gcc后加上 -lstdc++就ok了
+
+eg: gcc example.c -lstdc++
+
+（二）gcc 和 g++ 是有区别的
+
+（1）gcc和g++都是GNU(组织)的一个编译器。
+
+（2）后缀名为.c的程序和.cpp的程序g++都会当成是c++的源程序来处理。而gcc不然，gcc会把.c的程序处理成c程序。
+
+（3）对于.cpp的程序，编译可以用gcc/g++，而链接可以用g++或者gcc -lstdc++。
+
+
+
+常用编译命令选项
+
+假设源程序文件名为test.c        (有空格时加“”，类似cmd   如gcc “uva 115.cpp”
+
+无选项编译链接
+
+gcc test.c
+
+将test.c预处理、汇编、编译并链接形成可执行文件。这里未指定输出文件，默认输出为a.out（Linux）a.exe（windows）。
+
+-g为了调试用的 
+加个-g 是为了gdb 用
+选项 -o
+
+
+gcc test.c -o test
+
+将test.c预处理、汇编、编译并链接形成可执行文件test。-o选项用来指定输出文件的文件名。
+
+选项 -E
+
+gcc -E test.c -o test.i
+
+将test.c预处理输出test.i文件。
+
+选项 -S
+
+gcc -S test.i
+
+将预处理输出文件test.i汇编成test.s文件。
+
+选项 -c
+
+gcc -c test.s
+
+将汇编输出文件test.s编译输出test.o文件。  -c 只编译不链接  ,产生.o文件，就是obj文件，不产生执行文件
+
+无选项链接
+
+gcc test.o -o test
+
+将编译输出文件test.o链接成最终可执行文件test。
+
+选项 -O
+
+gcc -O1 test.c -o test
+
+使用编译优化级别1编译程序。级别为1~3，级别越大优化效果越好，但编译时间越长。
+
+-DDEBUG 
+位于#ifdef DEBUG #endif 间语句会被编译（否则不会编译！不是不执行）
+
+C语言中（扩展名.c） -lm连接math.h，
+c++编译器会自动连接数学库
+
+-ansi 判断是否和ANSI冲突，-pedantic更严格
+-Wall显示所有的警告信息
+-Wall选项可以打开所有类型的语法警告，以便于确定程序源代码是否是正确的，并且尽可能实现可移植性。
+
+对Linux开发人员来讲，GCC给出的警告信息是很有价值的，它们不仅可以帮助程序员写出更加健壮的程序，而且还是跟踪和调试程序的有力工具。建议在用GCC编译源代码时始终带上-Wall选项，养成良好的习惯。
+
+-pedantic以ANSI/ISO C标准列出的所有警告
+当GCC在编译不符合ANSI/ISO C语言标准的源代码时，如果在编译指令中加上了-pedantic选项，那么源程序中使用了扩展语法的地方将产生相应的警告信息。
+
+多源文件的编译方法
+
+假设有两个源文件为test.c和testfun.c
+
+多个文件一起编译
+gcc testfun.c test.c -o test
+将testfun.c和test.c分别编译后链接成test可执行文件。
+
+分别编译各个源文件，之后对编译后输出的目标文件链接。
+gcc -c testfun.c    #将testfun.c编译成testfun.o
+gcc -c test.c       #将test.c编译成test.o
+gcc -o testfun.o test.o -o test    #将testfun.o和test.o链接成test
+
+以上两种方法相比较，第一中方法编译时需要所有文件重新编译，而第二种方法可以只重新编译修改的文件，未修改的文件不用重新编译。

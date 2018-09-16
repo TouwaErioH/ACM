@@ -1,0 +1,318 @@
+7.大整数类  （非负）
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+struct BigInteger{
+    static const int BASE=100000000;
+    static const int WIDTH=8;
+    vector<int> s;
+    
+    BigInteger（long long num=0）{*this = 0}//构造函数
+    BigInteger operator =（long long num）{
+s.clear();
+do{
+s.push_back(num%BASE);
+num/=BASE;
+}while(num>0);
+return *this;
+}
+
+
+
+BigInteger operator = (const string& str){  
+s.clear();
+        int x,len=(str.length()-1)/WIDTH+1;
+        for(int i=0;i<len;i++){
+            int end=s.length()-i*WIDTH;
+            int start=max(0,end-WIDTH);
+            sscanf(str.substr(start,end).c_str(),"%d",&x);
+            s.push_back(x);
+        }
+        
+        return *this;
+    }
+    
+    BigInteger operator + (const BigInteger &b) const {
+        BigInteger c;
+        c.s.clear();
+        int i,g;
+        int x;
+        for(i=0,g=0;;i++){
+            if(g==0&&i>=s.size()&&i>=b.s.size()){//无进位，两个BigInteger实例均已遍历完成
+                break;
+            x=g;
+            if(i<s.size())
+                x+=s[i];
+            if(i<b.s.size())
+                x+=b.s[i];
+            c.s.push_back(x%BASE);
+            g=x/BASE;
+        }
+        return c;
+    }
+
+BigInteger operater+=(const BigInteger &b){
+*this=*this+b;return *this;
+}
+
+    BigInteger operator - (const BigInteger& b) const
+    {
+        BigInteger c;
+        c.s.clear();
+        int MAX=std::max(s.size(),b.s.size());
+        for(int i=0,g=0;;i++)
+        {
+            if(g==0&&i>=MAX)
+                break;
+            int x=g;
+            if(i<s.size())
+                x+=s[i];
+            if(i<b.s.size())
+                x-=b.s[i];
+            if(i==MAX-1)
+                c.s.push_back(x%BASE);
+            else
+                c.s.push_back(abs(x%BASE));
+            g=x/BASE;
+        }
+        return c;
+    }
+    BigInteger operator -= (const BigInteger& b)
+    {
+        *this=*this-b;
+        return *this;
+    }
+    BigInteger operator * (const BigInteger& b)
+    {
+        std::stringstream ss;
+        for(int i=s.size()-1;i>=0;i--)
+            ss<<s[i];
+        std::string operand1=ss.str();
+        ss.str("");
+        for(int i=b.s.size()-1;i>=0;i--)
+            ss<<b.s[i];
+        std::string operand2=ss.str();
+        std::vector<int> c,d,temp;
+        for(int i=operand1.length()-1;i>=0;i--)
+            c.push_back(operand1[i]-'0');
+        for(int i=operand2.length()-1;i>=0;i--)
+            d.push_back(operand2[i]-'0');
+ 
+        int MAX=std::max(c.size(),d.size());
+        for(int i=0;i<MAX*2+1;i++)
+            temp.push_back(0);
+ 
+        for(int i=0;i<c.size();i++)
+            for(int j=0;j<d.size();j++)
+                temp[i+j]+=c[i]*d[j];
+        for(int i=0;i<2*MAX+1;i++)
+            if(temp[i]>9)
+            {
+                temp[i+1]+=temp[i]/10;
+                temp[i]%=10;
+            }
+        int m=2*MAX;
+        while(temp[m]==0)
+            m--;
+ 
+        BigInteger another;
+        another.s.clear();
+        int len=(m-1)/WIDTH+1;
+ 
+        for(int i=0;i<len;i++)
+            another.s.push_back(0);
+        for(int i=0;i<len;i++)
+        {
+            int x=1;
+            int k=0;
+            int end=std::min(m+1,(i+1)*WIDTH);
+            int start=i*WIDTH;
+            for(int j=start;j<end;j++)
+            {
+                k+=x*temp[j];
+                x*=10;
+            }
+            another.s[i]=k;
+        }
+        return another;
+    }
+    BigInteger operator *= (const BigInteger& b)
+    {
+        *this=*this*b;
+        return *this;
+    }
+    //自己写的除法，可以实现像int型一样的效果
+    BigInteger operator / (const BigInteger& b)
+    {
+        std::string operand1,operand2,result;
+        std::stringstream ss;
+        for(int i=s.size()-1;i>=0;i--)
+            ss<<s[i];
+        operand1=ss.str();
+        ss.str("");
+        for(int i=b.s.size()-1;i>=0;i--)
+            ss<<b.s[i];
+        operand2=ss.str();
+ 
+        int len1,len2;
+        len1=operand1.length();
+        len2=operand2.length();
+        if(len1<len2)   //若操作数1小于操作数2，返回0
+            return 0;
+        if(*this==b)    //若两数相等，返回1，这里用到下面的“==”重载运算符
+            return 1;
+ 
+        std::vector<int> c,d;
+        for(int i=0;i<len1;i++)
+        {
+            c.push_back(operand1[i]-'0');
+            if(i<len2)
+                d.push_back(operand2[i]-'0');
+            else
+                d.push_back(0);
+        }
+ 
+        int time=len1-len2;
+        int len=len1;
+        int k,l=0;
+        for(int i=0;i<=time;i++)
+        {
+            int ok=1;
+            k=0;
+            do{
+                if(c[l]==0)
+                {
+                    l++;
+                    ok=0;
+                    len1--;
+                }
+                if(len==len1)
+                {
+                    int j=0;
+                    while(j<len2)
+                    {
+                        if(c[i+j]>d[j])    //第一次大就表示operand1 > operand2
+                        {
+                            ok=1;
+                            break;
+                        }
+                        else if(c[i+j]<d[j])       //第一次小就表示operand1 < operand2
+                        {
+                            ok=0;
+                            break;
+                        }
+                        j++;
+                    }
+                }
+                if(ok)
+                {
+                    for(int j=0;j<len;j++)
+                    {
+                        c[j+i]-=d[j];
+                        if(c[j+i]<0)
+                        {
+                            c[j+i-1]--;
+                            c[j+i]+=10;
+                        }
+                    }
+                    k++;
+                }
+            }while(ok);
+            len--;
+            result+=k+'0';
+        }
+        BigInteger temp;
+        temp=result;
+        return temp;
+    }
+    BigInteger operator /= (const BigInteger& b)
+    {
+        *this=*this/b;
+        return *this;
+    }
+    //以下的重载方法全都在上面的四则运算上编写，不再介绍
+    BigInteger operator % (const BigInteger& b)
+    {
+        BigInteger c;
+        c=*this-(*this/b)*b;
+        return c;
+    }
+    BigInteger operator %= (const BigInteger& b)
+    {
+        *this=*this%b;
+        return *this;
+    }
+    bool operator < (const BigInteger& b) const
+    {
+        if(s.size()!=b.s.size())
+            return s.size()<b.s.size();
+        for(int i=s.size()-1;i>=0;i--)
+            if(s[i]!=b.s[i])
+                return  s[i]<b.s[i];
+        return false;//相等
+    }
+    bool operator > (const BigInteger& b) const
+    {
+        return b<*this;
+    }
+    bool operator <= (const BigInteger& b) const
+    {
+        return !(b<*this);
+    }
+    bool operator >= (const BigInteger& b) const
+    {
+        return !(*this<b);
+    }
+    bool operator != (const BigInteger& b) const
+    {
+        return *this<b||*this>b;
+    }
+    bool operator == (const BigInteger& b) const
+    {
+        return !(*this<b)&&!(*this>b);
+    }
+    friend std::ostream& operator << (std::ostream& out,const BigInteger& x)
+    {
+        out<<x.s.back();
+        for(int i=x.s.size()-2;i>=0;i--)
+        {
+            char buf[20];
+            sprintf(buf,"%08d",x.s[i]);
+            for(int j=0;j<strlen(buf);j++)
+                out<<buf[j];
+        }
+        return out;
+    }
+    friend std::istream& operator >> (std::istream& in,BigInteger& x)
+    {
+        std::string s;
+        if(!(in>>s))
+            return in;
+        x=s;
+        return in;
+    }
+};
+
+istream& operator >> (istream &in, BigInteger &x){
+    string s;
+    if(!(in>>x)) return in;
+    x=s;
+    return in;
+}
+
+ostream& operator << (ostream &out,const BigInteger &x){
+out << x.s.back();//最高位不足8位的预防处理
+    int i;
+    for(i=x.s.size()-2;i>=0;i--){
+ char buf[20];
+        sprintf(buf,"%08d",x.s[i]);//不足8位补0
+for(int j=0;j<strlen(buf);j++)
+        out<<buf[j];
+    }
+    return out;
+}
+
+说明：    static const int BASE=100000000;这个常数不属于 BigInteger类型的结构体变量，而属于 BigInteger这个类型，称为静态成员变量。在 BigInteger的成员函数内可以直接使用，但是在其他地方，用 BigInteger::BASE

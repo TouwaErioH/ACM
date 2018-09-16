@@ -1,0 +1,223 @@
+http://www.cnblogs.com/ACMan/archive/2012/05/30/2526927.html
+http://www.cnblogs.com/shanyr/p/5745807.html
+
+stl初步 Standard Template Library
+
+1.排序与检索
+
+sort升序排序；
+compare函数；
+需要对结构体排序，就要定义<,或者compare
+对vector，用sort（v.begin（）,v.end（））
+
+upper_bound（i） 返回的是键值为i的元素可以插入的最后一个位置（上界）
+lowe_bound（i） 返回的是键值为i的元素可以插入的位置的第一个位置（下界）。
+lower_bound( begin,end,num)：从数组的begin位置到end-1位置二分查找第一个大于或等于num的数字，找到返回该数字的地址，不存在则返回end。通过返回的地址减去起始地址begin,得到找到数字在数组中的下标。
+
+upper_bound( begin,end,num)：从数组的begin位置到end-1位置二分查找第一个大于num的数字，找到返回该数字的地址，不存在则返回end。通过返回的地址减去起始地址begin,得到找到数字在数组中的下标。
+函数lower_bound()在first和last中的前闭后开区间进行二分查找，返回大于或等于val的第一个元素位置。如果所有元素都小于val，则返回last的位置
+举例如下：
+一个数组number序列为：4,10,11,30,69,70,96,100.设要插入数字3,9,111.pos为要插入的位置的下标
+则
+pos = lower_bound( number, number + 8, 3) - number，pos = 0.即number数组的下标为0的位置。
+pos = lower_bound( number, number + 8, 9) - number， pos = 1，即number数组的下标为1的位置（即10所在的位置）。
+pos = lower_bound( number, number + 8, 111) - number， pos = 8，即number数组的下标为8的位置（但下标上限为7，所以返回最后一个元素的下一个元素）。
+所以，要记住：函数lower_bound()在first和last中的前闭后开区间进行二分查找，返回大于或等于val的第一个元素位置。如果所有元素都小于val，则返回last的位置，且last的位置是越界的！！~
+
+2.不定长数组vector  头文件,<vector>
+vector是模板类，需要用vector<int>a,vector<double>b,来声明数组。vector<string>类似于字符串数组；
+有a.size（），a.resize(),a.push_back()(尾部插入）,a.pop_back（删除最后一个元素）;clear清空，empty测试是否为空
+
+
+    vector<int>v2(10);    //产生大小为10的vector
+    vector<int>v3(10,-1);    //产生大小为10，并且每个元素都是-1的vector
+    vector<int>v4(v3);        //用一个vector产生一个vecotr
+erase   
+v.insert(v.begin(),8);//在最前面插入新元素。  
+    v.insert(v.begin()+2,1);//在迭代器中第二个元素前插入新元素  
+    v.insert(v.end(),3);//在向量末尾追加新元素。  
+注意vector没有find，用的时候《algorithm》，find(v,begin(),v,end(),x)
+举例
+g[x] = vector<int>();赋空
+vector<int>a[30];   相当于二维数组，第二维大小不固定，每个a[i]都是vector，并且可以size，resize等操作
+a[b].push_back(b);  a[p].resize(h+1);
+vector<string>a,相当于string a[];//注意此时就是多个string  ，插入一个多一个，使用时为a[0],a[1]...
+vector<string>a[30]  ->插入时...          使用时 a[0][0],a[0][1]...      a[0].size,返回a[0][j]的个数
+for(int j=0;j<words[i].size();j++)
+        {
+            cout<<words[i][j];                 //
+
+
+3.集合set   头文件,<set>      不重复，自动排序   set::find和set::insert消耗时间级别都为logN。所以，如果你确实需要保证插入和检索时间在logN，set可能是个不错的选择。  
+
+和sort一样，自定义类型也可以构造set，但同样要定义<
+string <按字典序        
+
+.length .size用于string   
+tolower（），<ctype>
+set的各成员函数列表如下:
+
+insert//只能这样插入！！
+begin()--返回指向第一个元素的迭代器
+clear()--清除所有元素
+. count()--返回某个值元素的个数
+empty()--如果集合为空，返回true
+ end()--返回指向最后一个元素的迭代器
+ erase()--删除集合中的元素                   //小心使用
+find()--返回一个指向被查找到元素的迭代器     .find()，返回的是被查找键的位置，没有则返回map.end()。；   s.find()//与vector不同
+例如：
+ for (set<string>::iterator it = s.begin(); it != s.end(); it++)
+    {
+        string a = *it;
+        for (int i = 1; i < a.length(); ++i)
+        {
+            if (s.find(a.substr(0, i)) != s.end() && s.find(a.substr(i, a.length() - i)) != s.end())//核心
+            {
+                cout << a << endl;
+                break;
+
+string s("12345asdf");       //substr
+string a=s.substr(0,5);       //获得字符串s中 从第0位开始的长度为5的字符串//默认时的长度为从开始位置到尾，substr（j）就是从j到尾
+
+insert()--在集合中插入元素
+lower_bound()--返回指向大于（或等于）某值的第一个元素的迭代器
+size()--集合中元素的数目
+swap()--交换两个集合变量
+upper_bound()--返回大于某个值元素的迭代器    等等
+举例 
+set<string>dict;
+while（ss>>buf)        ss>>buf, 每次只读一个串，以空格分隔。用While的意思，循环读每一个字符
+  dict.insert(buf);
+迭代器 iterator类似于指针
+set<string>::iterator it=dict.begin();it!=dict.end();it++;
+cout<<*it<<endl;
+
+ multiset：多重集合，其实就是 set 集合的扩展版。
+唯一的不同是 set 集合中一个值只能出现一次，
+而多重集合中一个值可以出现多次。
+一些需要注意的地方是：
+find均返回第一个匹配的位置，也就是说后面的不会返回        
+set::insert(key)的返回值是一个pair<iterator, bool>，其中pair中的bool成员表明了key被插入之前，set中是否已存在相同的key；也就是说，如果set中已经存在相同key的元素，那么插入操作是会失败的，新的元素不会被插进去；而multiset::insert的返回值只是一个iterator，插入操作总是会成功的。
+        multiset::count(key)的返回值可能大于1。（因为插入了多个关键值）
+        multiset::size()的返回值是多重集合的势（cardinality），即multiset中元素的个数，而不是值的个数。比如，{1, 1, 2}的size是3，而不是2。
+        multiset::erase(key)会将对应的key全部删掉，所以对{1, 1, 2}调用erase(1)之后，它就变成了{2}。
+        只要key存在于集合中，set::equal_range(key)的返回值pair<iterator1, iterator2>总是会有++iterator1 == iterator2。但是对multiset来说就不一定了。                       
+
+<algorithm>
+set_union  :两个区间必须是有序区间（从小到大）
+算法set_union可以用来求两个集合的并集，此处的集合可以为std::set，也可以是std::multiset，但是不可以是hash_set以及hash_multiset。为什么呢？因为set_union要求两个区间必须是有序的（从小到大排列），std::set和std::multiset为有序序列，而hash_set以及hash_multiset为无序序列。   
+   由于两个集合内的每个元素都不需唯一，因此，如果某个值在区间1中出现m次，在区间2中出现n次，那么该值在输出区间中会出现min(m,n)次，且全部来自于区间1.函数返回值为一个迭代器，指向输出区间的尾部。
+OutputIterator set_union(InputIterator1 first1,InputIterator1 last1,InputIterator2 first2,InputIterator2 last2,OutputIterator result)   返回值是指向最后
+  std::vector<int> v(10);                      // 0 0 0 0 0 0 0 0 0 0
+  std::vector<int>::iterator it;
+  std::sort (first,first+5);     // 5 10 15 20 25
+  std::sort (second,second+5);   // 10 20 30 40 50
+  it=std::set_union (first, first+5, second, second+5, v.begin());    
+     // 5 10 15 20 25 30 40 50 0 0      //参数：求并集的两个集合（数组或者set等其他类型）的起止地址，最后一个参数是前两个集合并集的结果需要插入的地方
+  v.resize(it-v.begin());                      // 5 10 15 20 25 30 40 50
+
+4.映射map   <map>
+使用count，返回的是被查找元素的个数。如果有，返回1；否则，返回0。注意，map中不存在相同元素，所以返回值只能是1或0。
+
+使用find，返回的是被查找元素的位置，没有则返回map.end()。
+从key（键）到value（值）的映射
+为了实现快速查找，map内部本身就是按序存储的（比如红黑树）。在我们插入<key, value>键值对时，就会按照key的大小顺序进行存储。这也是作为key的类型必须能够进行<运算比较的原因。
+如map<string,int>month_name;month_name["July"]=7;
+使用.count()，返回的是被查找键的个数。如果有，返回1；否则，返回0。注意，map中不存在相同元素，所以返回值只能是1或0。
+使用.find()，返回的是被查找键的位置，没有则返回map.end()。
+        if(!cnt[r]) cnt[r] = 0;
+        cnt[r]++;           可以记录string出现次数//第一次count，为0，
+ 
+
+find//与vector不同
+map<string,int>::iterator it;
+it=test.find("test0");
+cout<<"test0 find:";
+if(it==test.end()){
+cout<<"test0 not found"<<endl;
+ }
+set_intersection  
+intersection前务必对取交集的对象a和b进行sort
+OutputIt set_intersection( InputIt1 first1, InputIt1 last1,
+                             InputIt2 first2, InputIt2 last2,
+                             OutputIt d_first );
+4.5
+//注意，erase的参数为迭代器，三者都是，例如s.erase(s.find(b-a))//记住这样的操作;，set可以erase(k)待研究；remove有问题
+.end()返回的是最后一个元素后面一个位置，要用最后一个元素时，--
+迭代器不能+1，-1，+5.。。要用++，--
+
+5.栈，队列，优先队列
+
+栈  <stack>     stack<int>s,  .push(),   .pop()    .top()(取但不删除）   //注意，一般先top再pop
+
+队列<queue>  queue<int>s   
+push(x) 将x压入队列的末端
+pop() 弹出队列的第一个元素(队顶元素)，注意此函数并不返回任何值
+front() 返回第一个元素(队顶元素)    q.front()
+back() 返回最后被压入的元素(队尾元素)
+empty() 当队列为空时，返回true
+size() 返回队列的长度            queue不支持clear，用循环
+
+优先队列  先出队列的是优先级最高 的元素
+top()  返回优先队列中有最高优先级的元素 
+priority_queue<int>pq   越小的整数优先级越低
+自定义类型也可以组成优先队列，但是要定义<符号
+也可以定义一个结构体cmp，重载（）运算符，改变优先级   形如   priority_queue<int，vector<int>,cmp>pq
+struct cmp（）{
+bool operator（）{const int a，const int b）const{
+return a%10>b%10;
+}
+}
+对于常见的优先队列，stl有更简单的定义方法，如整数小，priority_queue<int，vector<int>,greater<int> >pq注意最后 > >不要写在一起
+copy     <algorithm> 可以用于复制
+ //这三个参数要记住
+  std::copy ( myints, myints+7, myvector.begin() );
+  //参数       first   last      result    
+  // [first,last)
+back_inserter：创建一个使用push_back的迭代器
+inserter：此函数接受第二个参数，这个参数必须是一个指向给定容器的迭代器。元素将被插入到给定迭代器所表示的元素之前。
+front_inserter：创建一个使用push_front的迭代器（元素总是插入到容器第一个元素之前） 
+list<int> lst = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+list<int> lst2 ={10}, lst3={10},lst4={10};
+copy(lst.cbegin(), lst.cend(), back_inserter(lst2));
+//lst2包含10,1,2,3,4,5,6,7,8,9
+copy(lst.cbegin(), lst.cend(), inserter(lst3, lst3.begin()));
+//lst3包含1,2,3,4,5,6,7,8,9,10
+copy(lst.cbegin(), lst.cend(), front_inserter(lst4));
+//lst4包含9,8,7,6,5,4,3,2,1,10
+
+deque双端队列（uva210）
+
+6.测试stl
+<cstdlib>  rand (0,RAAND_MAX)至少为 32767 2^15-1;
+产生0-n，rand/RAND_MAX  *n;
+<ctime>  time_t t=time(null);  获取系统时间；   srand（time（null））
+vector尽量用引用方式
+assert宏，用法是assert(表达式），表达式为假时终止程序并给出错误信息；
+
+
+7.pair定义于头文件utility，iostream，vector。。。中，主要的作用是将两个数据组合成一个数据，两个数据可以是同一类型或者不同类型。
+pair<T1,T2> p1;
+pair<T1,T2> p1(v1,v2);
+make_pair(v1,v2);                          scanf("%d%d%d",&r,&a,&b);
+                                              for(i=a;i<=b;i++){
+                                              m[make_pair(r,i)]=-1;    //好用的初始化
+p1 < p2;
+p1 == p2;
+p.first;
+p.second;
+
+  
+7.reverse 翻转  如reverse（str.bigin(),str.end） vec ...
+
+
+1.1max(m,(int)str.length)
+1.2
+    while(getline(cin,line))
+    {
+        string temp;
+        int len,cnt=0;
+        stringstream ss(line);
+        while(ss >> temp)     这种操作可以读取一行空格间断的字符串，然后读取各个串
+
+

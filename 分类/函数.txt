@@ -1,0 +1,105 @@
+函数
+#define maxn 100 无；
+1.<ctype.h>   isalpha()  isdigit(是否为数字）（也可以用-‘0’来实现） isprint   .tolower toupper
+2.#include <algorithm>     
+abs
+sort(start,end,排序方法)   
+bool compare(int a,int b)
+{
+return a>b;      从大到小排序
+}
+struct node
+{
+int a;
+int b;
+double c;
+}
+bool cmp(node x,node y)
+{
+if(x.a!=y.a) return x.a<y.a;
+if(x.b!=y.b) return x.b>y.b;
+return x.c>y.c;
+}
+3.memset <string.h>
+4.sprintf(),<cstdio>   int sprintf(char *buffer, const char *format, [argument]...)
+（1）buffer：是char类型的指针，指向写入的字符串指针；
+（2）format：格式化字符串，即在程序中想要的格式；
+（3）argument：可选参数，可以为任意类型的数据；
+  char* who = "I";
+  char* whom = "CSDN";
+  sprintf(s, "%s love %s.", who, whom); //产生："I love CSDN. "  这字符串写到s中
+  sprintf(s, "%10.3f", 3.1415626); //产生：" 3.142"
+  连接字符串与,将数据化为字符串         返回写入的字符数；出错-1
+5.strcpy(s1,s2)将s2复制到s1
+6.strcmp,相等返回0,第一个参数可以是其一个指针，指向起始位置
+7.如果一个函数要求char*参数，可以使用c_str()方法：
+string s = "Hello World!";
+printf("%s", s.c_str()); //输出 "Hello World!"
+7.puts输出字符串并换行
+8.next_permutation按字典序生成下一个排列  1.所有排列都生成后返回false；2.注意是下一个，所以最好先sort，再输出，再n_p;
+while(next_permutation(a,a+n))  生成1-n
+do{}while（n_p）；（先输出开始的）
+9.用pair时typedef方便。
+typedef pair<int,int>p;  queue<p>que;
+10.sprintf(buf, "%05d%05d", abcde, fghij);
+      if(strlen(buf) > 10) break;
+判断位数
+11.%05d，位数大于5位则输出实际位数
+
+12.判断类型的函数命名  is_pirme 
+
+13.sqrt 返回double，   （math.h）
+  floor（）向下取整，
+floor（sqrt（n）+0.5），利用四舍五入避免浮点误差（如本是整数值变成了xxx.99999）
+
+14.position=max_element(a,a+n)-a;
+printf("%d\n",*max_element(a,a+n));
+
+15.fill
+	int a[1000];
+	fill(a,a+1000,1);
+
+16.memset 对字节（byte）而不是位（bit）
+
+17.inline 内联
+
+18substr   s.substr(i,len)
+
+19.string 直接==比较
+
+
+20.upper_bound(a,a+n,k)   返回指向满足ai>k的ai的最小指针；lower   ai>=k的最小指针
+先排序
+
+21.sscanf
+char buf[512] = ;
+　　sscanf("123456 ", "%s", buf);
+　　printf("%s/n", buf);
+　　结果为：123456
+　　2. 取指定长度的字符串。如在下例中，取最大长度为4字节的字符串。
+　　sscanf("123456 ", "%4s", buf);
+　　printf("%s/n", buf);
+　　结果为：1234
+
+22.strchr    
+ 原型： char *strchr(const char *s,char c);
+#include<string.h>
+查找字符串s中首次出现字符c的位置,返回首次出现c的位置的指针，如果s中不存在c则返回NULL。
+
+23.const double PI = acos(-1.0);
+
+24.assert(pres)   pres错误时终止程序；
+
+25.关于引用   如double& a=x；则改变a实际就是改变x；x必须也为double
+
+26.log(x) e   log10(x)    logn^m(x)=1/mlogn(x)   
+
+27.exp(x)=e^x
+
+28.%%输出%号
+
+29.int a=atoi(s)  转化字符串为整型
+
+30.int N=ceil((double)(3*b-a)/(3*a-b));  ceil  向上取整
+
+31.fabs针对浮点数，abs针对整数 

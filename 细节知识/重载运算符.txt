@@ -1,0 +1,7 @@
+struct ant
+{
+    int id;
+    int p;
+    int d; 
+    bool operator <(const ant &a) const {return p<a.p;}
+};

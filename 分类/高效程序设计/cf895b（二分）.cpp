@@ -1,25 +1,30 @@
 #include <bits/stdc++.h>
-#define LL long long
+const int MAX=1e5+10;
+typedef long long LL;
 using namespace std;
-
-int n;
-int x,k,a[100005];
-
-int main(){
-    scanf("%d%d%d",&n,&x,&k);
-    for(int i = 0; i < n; i ++) scanf("%d",&a[i]);
-    sort(a,a+n);
-    LL sum = 0;
-    for(int i = 0; i < n; i ++){
-        LL p = ceil(a[i]*1.0/x)*x;
-        sum += lower_bound(a,a+n,p+k*x) - lower_bound(a,a+n,max(a[i],p+(k-1)*x));//p+kx得到k+1个，p+k-1*x得k个，之间的符合
+LL a[100005];
+int main (){
+    LL n,x,k;
+    while (scanf ("%lld%lld%lld",&n,&x,&k)!=EOF){
+        for (int i=0;i<n;i++) scanf ("%lld",&a[i]);
+        sort(a,a+n);
+        LL sum=0;
+        for (int i=0;i<n;i++){
+            LL tt=a[i]%x==0?a[i]:(a[i]/x+1)*x;
+            sum+=lower_bound(a,a+n,tt+k*x)-lower_bound(a,a+n,max(tt+(k-1)*x,a[i]));
+        }
+        printf ("%lld\n",sum);
     }
-    printf("%I64d\n",sum);
     return 0;
 }
+
+---------------------
+
+本文来自 MM__1997 的CSDN 博客 ，全文地址请点击：https://blog.csdn.net/mm__1997/article/details/78668899?utm_source=copy 
 
 /*
 把n个数从小到大排序，然后求出大于等于a[i]的第一个x的倍数p
 然后只需二分查找计算出p+k*x 和 max（a[i],p+(k-1)*x）之间数的个数求和即可。
 
  */
+;//p+kx得到k+1个，p+k-1*x得k个，之间的符合

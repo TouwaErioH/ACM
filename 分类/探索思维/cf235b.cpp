@@ -10,19 +10,15 @@ int main()
 {
     while(scanf("%d",&n)==1)
     {
-        ans=0;
+        ans=0;double cnt=0;double p;
         for(int i=1;i<=n;i++)
         {
-            scanf("%lf",p+i);
-            ans+=p[i];
+            scanf("%lf",p);
+
+            ans+=(2*cnt+1)*p;
+            cnt=(cnt+1)*p;
         }
-        dp[0]=0;
-        int i=1;
-        for(i;i<=n;i++)
-        {
-            dp[i]=p[i]*(dp[i-1]+1);
-            ans+=2*(dp[i]-p[i]);
-         }
+
 
         printf("%.15lf\n",ans);
     }

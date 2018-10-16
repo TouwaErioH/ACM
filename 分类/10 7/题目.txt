@@ -1,0 +1,15 @@
+1. Dreamoon and MRT
+只需要考虑相对位置，设a0位置为0
+枚举
+由于对称性，可以设第一步向右，这样总时间减少一半
+递归的话省去了cnt部分，直接从O(N2^N-1)变成了O（2^N-1）
+可以分析一下几个代码的优化过程
+
+2.TIOJ1208  
+pbds库的tree，需要研究一下
+https://codeforces.com/blog/entry/11080
+find_by_order() and order_of_key(). The first returns an iterator to the k-th largest element (counting from zero), the second — the number of items in a set that are strictly smaller than our item
+用pair<int，int>相当于 multiset
+比较的应该是first，（还要再验证一下）
+
+二分答案，然后每次判断中，遍历前缀和Bi，然后查找有多少个j<i ，满足 Bi-Bj>X，也就是有多少个子序列的和是大于X的，即使求有多少个Bj小于【Bi-X】

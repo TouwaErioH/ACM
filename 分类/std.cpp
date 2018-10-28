@@ -20,9 +20,9 @@ int binarysearch(int x)
               return gcd(b,a%b);
     }
 
-int pow(int a,int n)//·µ»ØÖµÊÇaµÄn´Î·½
+ll pow(ll a,ll n)//·µ»ØÖµÊÇaµÄn´Î·½
 {
-    int result=1,flag=a;
+    ll result=1,flag=a;
     while(n!=0)
     {
         if(n&1)//Èç¹ûnÊÇÆæÊı£¬¼´nµÄ¶ş½øÖÆ×îÄ©Î»Îª1Ê±
@@ -34,9 +34,9 @@ int pow(int a,int n)//·µ»ØÖµÊÇaµÄn´Î·½
 }
 
 
-int pow(int a,int n,int b)//·µ»ØÖµÊÇaµÄn´Î·½¶ÔbÈ¡ÓàºóµÄÖµ  Ô­Àí£º»ıµÄÈ¡ÓàµÈÓÚÈ¡ÓàµÄ»ıÈ¡Óà
+ll pow(ll a,ll n,ll b)//·µ»ØÖµÊÇaµÄn´Î·½¶ÔbÈ¡ÓàºóµÄÖµ  Ô­Àí£º»ıµÄÈ¡ÓàµÈÓÚÈ¡ÓàµÄ»ıÈ¡Óà
 {
-    int result=1;
+    ll result=1;
     a=a%b;//»ıµÄÈ¡ÓàµÈÓÚÈ¡ÓàµÄ»ıÈ¡Óà
     while(n>0)
     {
@@ -48,5 +48,53 @@ int pow(int a,int n,int b)//·µ»ØÖµÊÇaµÄn´Î·½¶ÔbÈ¡ÓàºóµÄÖµ  Ô­Àí£º»ıµÄÈ¡ÓàµÈÓÚÈ¡Ó
     return result;
 }
 
+void eratosthenes_sieve(int n)
+{
+    totPrimes = 0;
+    memset(flag, 0, sizeof(flag));
 
+    int sqrtn = sqrt(n + 0.5);
+    for (int i = 2; i <= sqrtn; i++) {
+        if (!flag[i]) {
+            primes[totPrimes++] = i;
+            for (int j = i * i; j <= n; j += i) {
+                flag[j] = true;
+            }
+        }
+    }
+    for (int i = sqrtn + 1; i <= n; i++) {
+        if (!flag[i])
+            primes[++totPrimes] = i;
+    }
+}
+
+void euler_sieve(int n)
+{
+    totPrimes = 0;
+    memset(flag, 0, sizeof(flag));
+
+    for (int i = 2; i <= n; i++) {
+        if (!flag[i])
+            primes[totPrimes++] = i;
+        for (int j = 0; i * primes[j] <= n; j++) {
+            flag[i*primes[j]] = true;
+            if (i % primes[j] == 0)
+                break;
+        }
+    }
+}
+
+bool isPrime(int n) {
+
+	if (n < 2)
+		return false;
+   int m=sqrt(n+0.5);
+	for (int i = 2; i <= m; i++) {
+
+		if (n % i == 0)
+			return false;
+	}
+
+	return true;
+}
 

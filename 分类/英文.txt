@@ -29,3 +29,13 @@ vice versa反之亦然
 can shift vertically and horizentally 可以竖直或水平移动
 multiples k  是k的倍数
 frequen 频率
+match  火柴
+
+arc 弧
+index 编号
+
+digit 数字(一个)
+bipartite二分图
+connected-component联通分量
+在无向图中，如果从顶点vi到顶点vj有路径，则称vi和vj连通。如果图中任意两个顶点之间都连通，则称该图为连通图，否则，将其中的较大连通子图称为连通分量。 　　在有向图中，如果对于每一对顶点vi和vj，从vi到vj和从vj到vi都有路径，则称该图为强连通图；否则，将其中的极大连通子图称为强连通分量。
+

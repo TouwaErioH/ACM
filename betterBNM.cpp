@@ -1,4 +1,4 @@
-//四次乘法 见https://zhuanlan.zhihu.com/p/83468752
+// 三次乘法。由于还没有实现大整数减法（或支持负数的加法），暂时还是伪代码 见https://zhuanlan.zhihu.com/p/83468752
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -84,22 +84,33 @@ string multi(string A, string B) {
       B1 = B.substr(0, len_B / 2);
       B2 = B.substr(len_B / 2);
       string part1_ = multi(A1, B1);
+	  part1_ = multi(2, part1_);
       string part1_0(A2.length()+B2.length(), '0');   //长度为A2.length()+B2.length()的0串
-      part1_ = part1_ + part1_0;                      //A1B1*10(n2,m2)
+      part1_ = part1_ + part1_0;                      //2*A1B1*10(n2,m2)
       string part2_ = multi(A2, B2);
+	  part2_ =multi(2,part2_);
       string part2_00(part1_.length() - part2_.length(), '0');
-      part2_ = part2_00 + part2_;                     //A2B2，高位补0
-      string part3_ = multi(A1, B2);
-      string part3_0(A2.length(), '0');
-      part3_ = part3_ + part3_0;                    //A1B2*10(n2)
-      string part3_00(part1_.length() - part3_.length(), '0');
-      part3_ = part3_00 + part3_;
-      string part4_ = multi(A2, B1);
-      string part4_0(B2.length(), '0');
+      part2_ = part2_00 + part2_;                     //2*A2B2，高位补0
+	  
+	  
+      string part3_ = A1;
+      string part3_0(A2.length(), '0');             //(A1*10(n2)-A2)
+      part3_ = part3_ + part3_0;                    //A1*10(n2)  伪代码
+	  part3_= part_3-A2                             //大整数减法（或支持负数的大整数加法），未实现
+      
+	  
+	  
+      string part4_ = B1;                           //(B2-B1*10(m2))
+      string part4_0=(B2.length(), '0'); 
       part4_ = part4_ + part4_0;
-      string part4_00(part1_.length() - part4_.length(), '0');
-      part4_ = part4_00 + part4_;
-      return Plus(part1_, part2_, part3_, part4_);   //未改进的第一种算法
+	  part4_= B2-part4_;                           //伪代码
+	  
+	  part5_= multi(part4_,part3_)                
+	  
+      string part5_00(part1_.length() - part5_.length(), '0');
+      part5_ = part5_00 + part5_;
+	  string u0(part1_.length(), '0');
+      return Plus(part1_, part2_, part5_, u0);   
     }
     }
 }
